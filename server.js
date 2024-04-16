@@ -1,6 +1,7 @@
 const express = require('express')
 
-const app = express()
+const app = express();
+app.use(express.json());
 
 const books = [
     {
@@ -59,7 +60,16 @@ app.get('/books', (req, res) => {
         return res.json(result)
 
     }
+
+    return res.json(books);
+})
+
+
+app.post('/books', (req,res)=> {
+    const book = req.body;
+    books.push(book);
     res.json(books);
+
 })
 
 
