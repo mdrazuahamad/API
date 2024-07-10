@@ -3,13 +3,38 @@ const db = require('../db/db');
 
 
 
-router.get('/t/:ticketId', () =>{});
-router.patch('/t/:ticketId', () =>{});
-router.delete('/t/:ticketId', () =>{});
+router.get('/t/:ticketId', (req, res) =>{
+    const ticketId = req.params.ticketId;
+    const tickets = db.findById(ticketId);
+    res.status(200).json(tickets);
+});
+router.patch('/t/:ticketId', (req,res) =>{
+    const ticketId = req.params.ticketId;
+    const updateTicket = db.updateById(ticketId, req.body);
+    res.status(200).json({message: 'Updated Successfully', updateTicket})
+});
+router.delete('/t/:ticketId', (req,res) =>{
+    const ticketId = req.params.ticketId;
+    db.deleteById(ticketId);
+    res.status(203).send()
+});
 
-router.get('/t/:username', () =>{});
-router.patch('/t/:username', () =>{});
-router.delete('/t/:username', () =>{});
+router.get('/u/:username', (req,res) =>{
+    const username = req.params.username;
+    const tickets = db.findByUsername(username);
+    res.status(200).json(tickets)
+
+});
+router.patch('/u/:username', (req,res) =>{
+    const username = req.params.username;
+    const updateById = db.updateById(username, req.body)
+    res.status(200).json({message: 'Updated Successfully', updateById})
+});
+router.delete('/u/:username', (req,res) =>{
+    const username = req.params.username;
+    db.deleteById(username);
+    res.status(203).send()
+});
 
 router.post('/sell', (req,res) =>{
     const {username,price}= req.body;
